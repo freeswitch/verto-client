@@ -2266,7 +2266,14 @@
         case $.verto.enum.state.hangup:
 
             if (dialog.lastState.val > $.verto.enum.state.requesting.val && dialog.lastState.val < $.verto.enum.state.hangup.val) {
-                dialog.sendMethod("verto.bye", {});
+		var obj = {};
+                if (dialog.cause) {
+                    obj.cause = dialog.cause;
+                }
+                if (dialog.causeCode) {
+                    obj.causeCode = dialog.causeCode;
+                }
+                dialog.sendMethod("verto.bye", obj);
             }
 
             dialog.setState($.verto.enum.state.destroy);

@@ -621,6 +621,10 @@
                 console.debug("CLIENT READY", data.params);
                 break;
 
+            case 'verto.ping':
+                return {
+                    method: data.method
+                };
             default:
                 console.error("INVALID METHOD OR NON-EXISTANT CALL REFERENCE IGNORED", data.method);
                 break;

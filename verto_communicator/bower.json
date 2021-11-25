@@ -43,7 +43,7 @@
     "angular-tooltips": "~0.1.21",
     "datatables": "~1.10.8",
     "angular-bootstrap": "~0.14.3",
-    "bootstrap-material-design": "~0.3.0",
+    "bootstrap-material-design": "git://github.com/mdbootstrap/bootstrap-material-design#~0.3.0",
     "angular-translate": "~2.10.0",
     "angular-translate-loader-static-files": "~2.10.0",
     "angular-click-outside": "~2.9.2"

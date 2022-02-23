@@ -697,7 +697,7 @@
         }
 
 	config.bundlePolicy = "max-compat";
-	config.sdpSemantics = "plan-b";
+	config.sdpSemantics = "unified-plan";
 
         var peer = new window.RTCPeerConnection(config);
 

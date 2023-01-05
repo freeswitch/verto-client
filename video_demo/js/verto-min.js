@@ -64,7 +64,7 @@ var mediaParams=getMediaParams(self);console.log("Audio constraints",mediaParams
 onSuccess(self.options.useStream);}
 else if(mediaParams.audio||mediaParams.video){getUserMedia({constraints:{audio:mediaParams.audio,video:mediaParams.video},video:mediaParams.useVideo,onsuccess:onSuccess,onerror:onError,useCameraLabel:self.options.useCameraLabel,useMicLabel:self.options.useMicLabel,});}else{onSuccess(null);}};function FSRTCPeerConnection(options){var gathering=false,done=false;var config={};var default_ice=[{urls:['stun:stun.l.google.com:19302']}];if(self.options.turnServer){default_ice.push(self.options.turnServer)}
 if(options.iceServers){if(typeof(options.iceServers)==="boolean"){config.iceServers=default_ice;}else{config.iceServers=options.iceServers;}}
-config.bundlePolicy="max-compat";config.sdpSemantics="plan-b";var peer=new window.RTCPeerConnection(config);openOffererChannel();var x=0;function ice_handler(){done=true;gathering=null;if(options.onICEComplete){options.onICEComplete();}
+config.bundlePolicy="max-compat";config.sdpSemantics="unified-plan";var peer=new window.RTCPeerConnection(config);openOffererChannel();var x=0;function ice_handler(){done=true;gathering=null;if(options.onICEComplete){options.onICEComplete();}
 if(options.type=="offer"){options.onICESDP(peer.localDescription);}else{if(!x&&options.onICESDP){options.onICESDP(peer.localDescription);}}}
 peer.onicecandidate=function(event){if(done){return;}
 if(!gathering){gathering=setTimeout(ice_handler,1000);}
@@ -198,7 +198,7 @@ if(!list&&key&&key===verto.sessid){if(verto.callbacks.onMessage){verto.callbacks
 console.error("UNSUBBED or invalid EVENT "+key+" IGNORED");}else{for(var i in list){var sub=list[i];if(!sub||!sub.ready){console.error("invalid EVENT for "+key+" IGNORED");}else if(sub.handler){sub.handler(verto,data.params,sub.userData);}else if(verto.callbacks.onEvent){verto.callbacks.onEvent(verto,data.params,sub.userData);}else{console.log("EVENT:",data.params);}}}
 break;case"verto.info":if(verto.callbacks.onMessage){verto.callbacks.onMessage(verto,null,$.verto.enum.message.info,data.params.msg);}
 console.debug("MESSAGE from: "+data.params.msg.from,data.params.msg.body);break;case'verto.clientReady':if(verto.callbacks.onMessage){verto.callbacks.onMessage(verto,null,$.verto.enum.message.clientReady,data.params);}
-console.debug("CLIENT READY",data.params);break;default:console.error("INVALID METHOD OR NON-EXISTANT CALL REFERENCE IGNORED",data.method);break;}}};var del_array=function(array,name){var r=[];var len=array.length;for(var i=0;i<len;i++){if(array[i]!=name){r.push(array[i]);}}
+console.debug("CLIENT READY",data.params);break;case'verto.ping':return{method:data.method};default:console.error("INVALID METHOD OR NON-EXISTANT CALL REFERENCE IGNORED",data.method);break;}}};var del_array=function(array,name){var r=[];var len=array.length;for(var i=0;i<len;i++){if(array[i]!=name){r.push(array[i]);}}
 return r;};var hashArray=function(){var vha=this;var hash={};var array=[];vha.reorder=function(a){array=a;var h=hash;hash={};var len=array.length;for(var i=0;i<len;i++){var key=array[i];if(h[key]){hash[key]=h[key];delete h[key];}}
 h=undefined;};vha.clear=function(){hash=undefined;array=undefined;hash={};array=[];};vha.add=function(name,val,insertAt){var redraw=false;if(!hash[name]){if(insertAt===undefined||insertAt<0||insertAt>=array.length){array.push(name);}else{var x=0;var n=[];var len=array.length;for(var i=0;i<len;i++){if(x++==insertAt){n.push(name);}
 n.push(array[i]);}
@@ -294,7 +294,9 @@ $.verto.dialog.prototype.setState=function(state){var dialog=this;if(dialog.stat
 if(dialog.state==state||!checkStateChange(dialog.state,state)){console.error("Dialog "+dialog.callID+": INVALID state change from "+dialog.state.name+" to "+state.name);dialog.hangup();return false;}
 console.log("Dialog "+dialog.callID+": state change from "+dialog.state.name+" to "+state.name);dialog.lastState=dialog.state;dialog.state=state;if(dialog.callbacks.onDialogState){dialog.callbacks.onDialogState(this);}
 switch(dialog.state){case $.verto.enum.state.early:case $.verto.enum.state.active:var speaker=dialog.useSpeak;console.info("Using Speaker: ",speaker);if(speaker&&speaker!=="any"&&speaker!=="none"){setTimeout(function(){dialog.setAudioPlaybackDevice(speaker);},500);}
-break;case $.verto.enum.state.trying:setTimeout(function(){if(dialog.state==$.verto.enum.state.trying){dialog.setState($.verto.enum.state.hangup);}},30000);break;case $.verto.enum.state.purge:dialog.setState($.verto.enum.state.destroy);break;case $.verto.enum.state.hangup:if(dialog.lastState.val>$.verto.enum.state.requesting.val&&dialog.lastState.val<$.verto.enum.state.hangup.val){dialog.sendMethod("verto.bye",{});}
+break;case $.verto.enum.state.trying:setTimeout(function(){if(dialog.state==$.verto.enum.state.trying){dialog.setState($.verto.enum.state.hangup);}},120000);break;case $.verto.enum.state.purge:dialog.setState($.verto.enum.state.destroy);break;case $.verto.enum.state.hangup:if(dialog.lastState.val>$.verto.enum.state.requesting.val&&dialog.lastState.val<$.verto.enum.state.hangup.val){var obj={};if(dialog.cause){obj.cause=dialog.cause;}
+if(dialog.causeCode){obj.causeCode=dialog.causeCode;}
+dialog.sendMethod("verto.bye",obj);}
 dialog.setState($.verto.enum.state.destroy);break;case $.verto.enum.state.destroy:if(typeof(dialog.verto.options.tag)==="function"){$('#'+dialog.params.tag).remove();}
 delete dialog.verto.dialogs[dialog.callID];if(dialog.params.screenShare){dialog.rtc.stopPeer();}else{dialog.rtc.stop();}
 break;}

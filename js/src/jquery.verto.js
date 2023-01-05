@@ -2262,7 +2262,7 @@
                 if (dialog.state == $.verto.enum.state.trying) {
                     dialog.setState($.verto.enum.state.hangup);
                 }
-            }, 30000);
+            }, 120000);
             break;
         case $.verto.enum.state.purge:
             dialog.setState($.verto.enum.state.destroy);

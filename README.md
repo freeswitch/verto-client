@@ -17,14 +17,18 @@ npm install
 grunt
 ```
 
-## directories
+## Docs
+
+https://evoluxbr.github.io/verto-docs/
+
+## Directories
 
 - demo: audio only WebRTC demo
 - video_demo: demo with video support
 - video_demo-live_canvas: video demo with live canvas feature
 - verto_communicator: nearly full featured video conference demo
 
-## others
+## Others
 
 - [@xswitch/rtc](https://www.npmjs.com/package/@xswitch/rtc) is a successor of the verto client SDK, with es6, most docs in Chinese though.
 - Theres some demos on https://git.xswitch.cn/xswitch/xcc-examples/src/branch/master/webrtc

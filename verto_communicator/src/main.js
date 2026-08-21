@@ -40,7 +40,6 @@ import './vendor/clickoutside.directive.js';
 import '../../js/src/jquery.jsonrpcclient.js';
 import '../../js/src/jquery.FSRTC.js';
 import '../../js/src/jquery.verto.js';
-import '../../js/src/vendor/adapter-latest.js';
 
 import '../js/3rd-party/getScreenId.js';
 import '../js/3rd-party/volume-meter.js';

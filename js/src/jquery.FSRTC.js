@@ -106,8 +106,10 @@
 	    offerToReceiveVideo: this.options.useVideo ? true : false,
 	};
 
-        if (self.options.useVideo) {
-            self.options.useVideo.style.display = 'none';
+        // Was self.options, and the constructor has no self: it read
+        // window.options and threw unless something else had defined it.
+        if (this.options.useVideo) {
+            this.options.useVideo.style.display = 'none';
         }
 
         setCompat();
@@ -282,6 +284,8 @@
     };
 
     $.FSRTC.prototype.stopPeer = function() {
+        var self = this;
+
         if (self.peer) {
             console.log("stopping peer");
             self.peer.stop();
@@ -490,7 +494,10 @@
 
 	    if (obj.options.useMic !== "any") {
 		//audio.optional = [{sourceId: obj.options.useMic}];
-		audio.deviceId = assignMediaIdToConstraint(obj.options.useMic);
+		// Merge, the way the video branch below does: assigning the
+		// helper's return value to .deviceId nested it inside itself,
+		// which getUserMedia rejects with a TypeError.
+		audio = assignMediaIdToConstraint(obj.options.useMic, audio);
 	    }
 	}
 
@@ -514,7 +521,7 @@
 	delete obj.options.videoParams.vertoBestFrameRate;
 
 	if (obj.options.screenShare) {
-	    if (!obj.options.useCamera && !!navigator.mozGetUserMedia) {
+	    if (!obj.options.useCamera && navigator.userAgent.toLowerCase().indexOf('firefox') !== -1) {
 		//This is an issue, only FireFox needs to ask this additional question if its screen or window we need a better way
 		var dowin = window.confirm("Do you want to share an application window?  If not you can share an entire screen.");
 
@@ -684,8 +691,8 @@
 	var config = {};
         var default_ice = [{ urls: ['stun:stun.l.google.com:19302'] }];
 
-        if (self.options.turnServer) {
-          default_ice.push(self.options.turnServer)
+        if (options.turnServer) {
+          default_ice.push(options.turnServer)
         }
 
         if (options.iceServers) {
@@ -763,7 +770,8 @@
         if (options.attachStreams && options.attachStreams.length) {
             var streams = options.attachStreams;
             for (var i = 0; i < streams.length; i++) {
-                peer.addStream(streams[i]);
+                var stream = streams[i];
+                stream.getTracks().forEach(function(track) { peer.addTrack(track, stream) });
             }
         }
 
@@ -789,12 +797,13 @@
         function createOffer() {
             if (!options.onOfferSDP) return;
 
-            peer.createOffer(function(sessionDescription) {
-                sessionDescription.sdp = serializeSdp(sessionDescription.sdp);
-                peer.setLocalDescription(sessionDescription);
-                options.onOfferSDP(sessionDescription);
-            },
-				onSdpError, options.constraints);
+            peer.createOffer(options.constraints).then(function(sessionDescription) {
+                var offer = {type: sessionDescription.type, sdp: serializeSdp(sessionDescription.sdp)};
+
+                return peer.setLocalDescription(offer).then(function() {
+                    options.onOfferSDP(offer);
+                });
+            }).catch(onSdpError);
         }
 
         // onAnswerSDP(RTCSessionDescription)
@@ -802,15 +811,18 @@
             if (options.type != "answer") return;
 
             //options.offerSDP.sdp = addStereo(options.offerSDP.sdp);
-            peer.setRemoteDescription(new window.RTCSessionDescription(options.offerSDP), onSdpSuccess, onSdpError);
-            peer.createAnswer(function(sessionDescription) {
-                sessionDescription.sdp = serializeSdp(sessionDescription.sdp);
-                peer.setLocalDescription(sessionDescription);
-                if (options.onAnswerSDP) {
-                    options.onAnswerSDP(sessionDescription);
-                }
-            },
-            onSdpError);
+            peer.setRemoteDescription(options.offerSDP).then(function() {
+                onSdpSuccess();
+                return peer.createAnswer();
+            }).then(function(sessionDescription) {
+                var answer = {type: sessionDescription.type, sdp: serializeSdp(sessionDescription.sdp)};
+
+                return peer.setLocalDescription(answer).then(function() {
+                    if (options.onAnswerSDP) {
+                        options.onAnswerSDP(answer);
+                    }
+                });
+            }).catch(onSdpError);
         }
 
 
@@ -922,13 +934,15 @@
         return {
             addAnswerSDP: function(sdp, cbSuccess, cbError) {
 
-                peer.setRemoteDescription(new window.RTCSessionDescription(sdp), cbSuccess ? cbSuccess : onSdpSuccess, cbError ? cbError : onSdpError);
+                peer.setRemoteDescription(sdp)
+                    .then(cbSuccess ? cbSuccess : onSdpSuccess)
+                    .catch(cbError ? cbError : onSdpError);
             },
             addICE: function(candidate) {
-                peer.addIceCandidate(new window.RTCIceCandidate({
+                peer.addIceCandidate({
                     sdpMLineIndex: candidate.sdpMLineIndex,
                     candidate: candidate.candidate
-                }));
+                }).catch(function(e) { console.error('addIceCandidate:', e) });
             },
 
             peer: peer,

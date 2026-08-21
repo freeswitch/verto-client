@@ -37,6 +37,7 @@ import './vendor/angular-fullscreen.js';
 import './vendor/clickoutside.directive.js';
 
 // The verto client library itself.
+import '../../js/src/vendor/media-device-id.min.js';
 import '../../js/src/jquery.jsonrpcclient.js';
 import '../../js/src/jquery.FSRTC.js';
 import '../../js/src/jquery.verto.js';

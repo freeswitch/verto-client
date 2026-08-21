@@ -701,7 +701,7 @@ vertoService.service('verto', ['$rootScope', '$cookies', '$location', 'storage',
                 }
                 break;
               default:
-                console.warn('Got a not implemented state:', d);
+                console.debug('No action for dialog state:', d.state.name, d);
                 break;
             }
           },

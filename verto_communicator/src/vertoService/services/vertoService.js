@@ -1101,7 +1101,16 @@ vertoService.service('verto', ['$rootScope', '$cookies', '$location', 'storage',
 
         data.call.dtmf('*0');
         data.mutedVideo = !data.mutedVideo;
-        console.debug('The video was muted for the call.');
+
+        // The DTMF only asks the conference to stop showing our video, which
+        // needs *0 bound in its caller-controls and does nothing at all on a
+        // direct call. Stop sending frames locally too, the same way the
+        // conference member status handler does.
+        if (angular.isFunction(data.call.setVideoMute)) {
+          data.call.setVideoMute(data.mutedVideo ? 'off' : 'on');
+        }
+
+        console.debug('The video was muted for the call:', data.mutedVideo);
 
         if (angular.isFunction(callback)) {
           callback(data.instance, true);

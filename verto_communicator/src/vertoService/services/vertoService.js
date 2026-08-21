@@ -1079,7 +1079,14 @@ vertoService.service('verto', ['$rootScope', '$cookies', '$location', 'storage',
 
         data.call.dtmf('0');
         data.mutedMic = !data.mutedMic;
-        console.debug('The mic was muted for the call.');
+
+        // Same as muteVideo: the DTMF is for the conference, the local track is
+        // what actually stops our audio from going out.
+        if (angular.isFunction(data.call.setMute)) {
+          data.call.setMute(data.mutedMic ? 'off' : 'on');
+        }
+
+        console.debug('The mic was muted for the call:', data.mutedMic);
 
         if (angular.isFunction(callback)) {
           callback(data.instance, true);

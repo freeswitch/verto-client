@@ -1,0 +1,9 @@
+# .git is deliberately NOT ignored: grunt's `revision` task reads it.
+out/
+verto_communicator/node_modules/
+verto_communicator/bower_components/
+verto_communicator/dist/
+verto_communicator/.tmp/
+verto_communicator/src/vertoControllers/controllers/AboutController.js
+js/node_modules/
+**/.DS_Store

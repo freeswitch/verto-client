@@ -17,6 +17,17 @@ npm install
 grunt
 ```
 
+## Building the Verto Communicator
+
+Its 2015-era Grunt/Bower toolchain no longer builds on a current distro, so use Docker:
+
+```
+./build.sh          # static site lands in ./out
+./build.sh --help   # --debug, --out DIR, --no-cache
+```
+
+Serve `out/` over HTTPS (WebRTC requires it); default login is in `out/config.json`.
+
 ## Docs
 
 https://evoluxbr.github.io/verto-docs/

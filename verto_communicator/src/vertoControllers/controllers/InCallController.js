@@ -4,8 +4,8 @@
   angular
     .module('vertoControllers')
     .controller('InCallController', ['$rootScope', '$scope',
-      '$http', '$location', '$modal', '$timeout', 'toastr', 'verto', 'storage', 'prompt', 'Fullscreen', '$translate',
-      function($rootScope, $scope, $http, $location, $modal, $timeout, toastr,
+      '$http', '$location', '$uibModal', '$timeout', 'toastr', 'verto', 'storage', 'prompt', 'Fullscreen', '$translate',
+      function($rootScope, $scope, $http, $location, $uibModal, $timeout, toastr,
         verto, storage, prompt, Fullscreen, $translate) {
 
         console.debug('Executing InCallController.');

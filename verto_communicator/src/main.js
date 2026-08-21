@@ -19,7 +19,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'angular-toastr/dist/angular-toastr.tpls.js';
 import 'angular-sanitize';
 import 'angular-route';
-import 'angular-ui-bootstrap/ui-bootstrap-tpls.js';
+import 'angular-ui-bootstrap';
 import 'angular-prompt/dist/angular-prompt.js';
 import 'angular-animate';
 import 'angular-cookies';

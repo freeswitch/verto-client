@@ -4,15 +4,15 @@
   angular
     .module('vertoControllers')
     .controller('ModalDialpadController', ['$scope',
-      '$modalInstance',
-      function($scope, $modalInstance) {
+      '$uibModalInstance',
+      function($scope, $uibModalInstance) {
 
         $scope.ok = function() {
-          $modalInstance.close('Ok.');
+          $uibModalInstance.close('Ok.');
         };
 
         $scope.cancel = function() {
-          $modalInstance.dismiss('cancel');
+          $uibModalInstance.dismiss('cancel');
         };
 
       }

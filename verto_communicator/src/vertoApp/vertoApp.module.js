@@ -70,8 +70,10 @@
     }
   });
 
-  vertoApp.config(['$routeProvider', 'gravatarServiceProvider', '$translateProvider', 'configLanguages',
-    function($routeProvider, gravatarServiceProvider, $translateProvider, configLanguages) {
+  vertoApp.config(['$routeProvider', '$locationProvider', 'gravatarServiceProvider', '$translateProvider', 'configLanguages',
+    function($routeProvider, $locationProvider, gravatarServiceProvider, $translateProvider, configLanguages) {
+      $locationProvider.hashPrefix('');
+
       $routeProvider.
       when('/', {
         title: 'Loading',

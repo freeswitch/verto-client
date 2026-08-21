@@ -144,8 +144,8 @@ window.updateVideoSize = function(ms) {
 
 var vertoService = angular.module('vertoService', ['ngCookies']);
 
-vertoService.service('verto', ['$rootScope', '$cookieStore', '$location', 'storage',
-  function($rootScope, $cookieStore, $location, storage) {
+vertoService.service('verto', ['$rootScope', '$cookies', '$location', 'storage',
+  function($rootScope, $cookies, $location, storage) {
     var data = {
       // Connection data.
       instance: null,
@@ -166,13 +166,13 @@ vertoService.service('verto', ['$rootScope', '$cookieStore', '$location', 'stora
       audioDevices: [],
       shareDevices: [],
       videoQuality: [],
-      extension: $cookieStore.get('verto_demo_ext'),
-      name: $cookieStore.get('verto_demo_name'),
-      email: $cookieStore.get('verto_demo_email'),
-      cid: $cookieStore.get('verto_demo_cid'),
-      textTo: $cookieStore.get('verto_demo_textto') || "1000",
-      login: $cookieStore.get('verto_demo_login') || "1008",
-      password: $cookieStore.get('verto_demo_passwd') || "1234",
+      extension: $cookies.getObject('verto_demo_ext'),
+      name: $cookies.getObject('verto_demo_name'),
+      email: $cookies.getObject('verto_demo_email'),
+      cid: $cookies.getObject('verto_demo_cid'),
+      textTo: $cookies.getObject('verto_demo_textto') || "1000",
+      login: $cookies.getObject('verto_demo_login') || "1008",
+      password: $cookies.getObject('verto_demo_passwd') || "1234",
       hostname: window.location.hostname,
       wsURL: ("wss://" + window.location.hostname + ":8082"),
       wsFallbackURL: null,

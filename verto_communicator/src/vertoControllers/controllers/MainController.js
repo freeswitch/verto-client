@@ -7,7 +7,7 @@
       '$scope',
       '$rootScope',
       '$location',
-      '$modal',
+      '$uibModal',
       '$timeout',
       '$q',
       'verto',
@@ -19,7 +19,7 @@
       'eventQueue',
       '$translate',
       '$window',
-      function($scope, $rootScope, $location, $modal, $timeout, $q, verto, storage, CallHistory, toastr, Fullscreen, prompt, eventQueue, $translate, $window) {
+      function($scope, $rootScope, $location, $uibModal, $timeout, $q, verto, storage, CallHistory, toastr, Fullscreen, prompt, eventQueue, $translate, $window) {
 
       console.debug('Executing MainController.');
       $rootScope.dtmfHistory = { value: '' };
@@ -174,7 +174,7 @@
        * Shows a modal with the settings.
        */
       $scope.openModalSettings = function() {
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
           animation: $scope.animationsEnabled,
           templateUrl: 'partials/modal_settings.html',
           controller: 'ModalSettingsController',
@@ -205,7 +205,7 @@
 
         angular.extend(options, _options);
 
-        var modalInstance = $modal.open(options);
+        var modalInstance = $uibModal.open(options);
 
         modalInstance.result.then(
           function(result) {

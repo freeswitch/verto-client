@@ -8,7 +8,8 @@
       function($scope, $http, toastr) {
         var url = window.location.origin + window.location.pathname;
         $http.get(url + 'contributors.txt')
-          .success(function(data) {
+          .then(function(response) {
+            var data = response.data;
 
             var contributors = [];
 
@@ -24,8 +25,7 @@
             }, contributors);
 
             $scope.contributors = contributors;
-          })
-          .error(function() {
+          }, function() {
             toastr.error('contributors not found.');
           });
       }

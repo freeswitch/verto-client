@@ -4,8 +4,8 @@
   angular
     .module('vertoControllers')
     .controller('PreviewController', ['$rootScope', '$scope',
-      '$http', '$location', '$modal', '$timeout', 'toastr', 'verto', 'storage', 'prompt', 'Fullscreen', '$translate',
-      function($rootScope, $scope, $http, $location, $modal, $timeout, toastr,
+      '$http', '$location', '$uibModal', '$timeout', 'toastr', 'verto', 'storage', 'prompt', 'Fullscreen', '$translate',
+      function($rootScope, $scope, $http, $location, $uibModal, $timeout, toastr,
         verto, storage, prompt, Fullscreen, $translate) {
 
         $scope.storage = storage;

@@ -19,14 +19,22 @@ grunt
 
 ## Building the Verto Communicator
 
-Its 2015-era Grunt/Bower toolchain no longer builds on a current distro, so use Docker:
+```
+cd verto_communicator
+npm ci
+npm run build          # static site in verto_communicator/dist
+npm run dev            # dev server on http://localhost:9001
+```
+
+Or without a local Node, in Docker:
 
 ```
 ./build.sh          # static site lands in ./out
-./build.sh --help   # --debug, --out DIR, --no-cache
+./build.sh --help   # --out DIR, --no-cache
 ```
 
-Serve `out/` over HTTPS (WebRTC requires it); default login is in `out/config.json`.
+Serve the output over HTTPS (WebRTC requires it, `localhost` excepted); default
+login is in `config.json` next to `index.html`.
 
 ## Docs
 

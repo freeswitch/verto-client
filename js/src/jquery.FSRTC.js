@@ -235,7 +235,7 @@
         doCallback(self, "onICESDP", msg);
     }
 
-    FSRTCattachMediaStream = function(element, stream) {
+    window.FSRTCattachMediaStream = function(element, stream) {
         if (typeof element.srcObject !== 'undefined') {
 	    element.srcObject = stream;
 	} else {
@@ -1064,6 +1064,7 @@
     var resList = [[160, 120], [320, 180], [320, 240], [640, 360], [640, 480], [1280, 720], [1920, 1080]];
     var resI = 0;
     var ttl = 0;
+    var w, h;
 
     var checkRes = function (cam, func) {
 

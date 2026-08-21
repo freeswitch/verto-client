@@ -16,7 +16,6 @@
     '720kb.tooltips',
     'ui.gravatar',
     'ui.bootstrap',
-    'directive.g+signin',
     'pascalprecht.translate',
     'angular-click-outside',
   ]);

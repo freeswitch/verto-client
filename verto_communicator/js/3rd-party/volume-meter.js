@@ -94,3 +94,7 @@ function volumeAudioProcess( event ) {
     // want "fast attack, slow release."
     this.volume = Math.max(rms, this.volume*this.averaging);
 }
+
+// Loaded as an ES module by src/main.js, which keeps top-level
+// declarations out of the global scope; the app calls createAudioMeter() bare.
+window.createAudioMeter = createAudioMeter;

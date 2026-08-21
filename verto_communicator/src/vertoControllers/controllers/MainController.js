@@ -3,7 +3,22 @@
 
   angular
     .module('vertoControllers')
-    .controller('MainController',
+    .controller('MainController', [
+      '$scope',
+      '$rootScope',
+      '$location',
+      '$modal',
+      '$timeout',
+      '$q',
+      'verto',
+      'storage',
+      'CallHistory',
+      'toastr',
+      'Fullscreen',
+      'prompt',
+      'eventQueue',
+      '$translate',
+      '$window',
       function($scope, $rootScope, $location, $modal, $timeout, $q, verto, storage, CallHistory, toastr, Fullscreen, prompt, eventQueue, $translate, $window) {
 
       console.debug('Executing MainController.');
@@ -605,6 +620,6 @@
       }
 
     }
-  );
+  ]);
 
 })();

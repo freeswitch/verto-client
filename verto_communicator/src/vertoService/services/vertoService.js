@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-var videoQuality = [];
+window.videoQuality = [];
 var videoQualitySource = [{
   id: 'qqvga',
   label: 'QQVGA 160x120',
@@ -39,7 +39,7 @@ var videoQualitySource = [{
   height: 1080
 }, ];
 
-var videoResolution = {
+window.videoResolution = {
   qqvga: {
     width: 160,
     height: 120
@@ -115,7 +115,7 @@ var framerate = [{
 
 var updateReq;
 
-var updateVideoSize = function(ms) {
+window.updateVideoSize = function(ms) {
     if (!ms) ms = 500;
 
     clearTimeout(updateReq);

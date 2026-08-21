@@ -2,7 +2,7 @@
 
   angular
   .module('storageService')
-  .factory('CallHistory', function(storage) {
+  .factory('CallHistory', ['storage', function(storage) {
 
     var history = storage.data.call_history;
     var history_control = storage.data.history_control;
@@ -54,4 +54,4 @@
         return history_control;
       }
     }
-});
+}]);

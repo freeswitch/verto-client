@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="vertoApp" ng-controller="MainController" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta name="description" content="Verto (VER-to) RTC is a FreeSWITCH endpoint that implements a subset of a JSON-RPC connection designed for use over secure websockets.">
+    <meta name="author" content="FreeSWITCH">
+    <link rel="icon" href="./src/favicon.ico">
+
+    <title ng-bind="'[' + title + '] ' + 'FreeSWITCH Verto&trade; Video Transcoding'"></title>
+
+    <script type="module" src="./src/main.js"></script>
+
+    <script>
+      if (location.search) {
+        var tmp = location.search;
+        location.search = '';
+        location.href = getPathFromUrl(location.href) + (location.hash ? location.hash : '#/') + tmp;
+      }
+
+      function getPathFromUrl(url) {
+        return url.split(/[?#]/)[0];
+      }
+    </script>
+  </head>
+  <body>
+
+    <div ng-include="'partials/menu.html'"></div>
+    <div ng-include="'partials/settings.html'"></div>
+
+    <div id="wrapper" class="toggled">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <div ng-include="'partials/chat.html'"></div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <div class="row" ng-view>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <video class="hide" id="webcam" autoplay="autoplay" style="width:100%; height:100%; object-fit:inherit;"></video>
+
+  </body>
+</html>

@@ -1,9 +1,7 @@
-# .git is deliberately NOT ignored: grunt's `revision` task reads it.
+# .git is deliberately NOT ignored: vite.config.js reads the revision from it.
 out/
+out-grunt/
 verto_communicator/node_modules/
-verto_communicator/bower_components/
 verto_communicator/dist/
-verto_communicator/.tmp/
-verto_communicator/src/vertoControllers/controllers/AboutController.js
 js/node_modules/
 **/.DS_Store

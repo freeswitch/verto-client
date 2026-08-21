@@ -6,7 +6,7 @@
     .controller('AboutController', ['$scope', '$http',
       'toastr',
       function($scope, $http, toastr) {
-	    var githash = '/* @echo revision */' || 'something is not right';
+	    var githash = __GIT_REVISION__ || 'something is not right';
             $scope.githash = githash;
 
 	/* leave this here for later, but its not needed right now

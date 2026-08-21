@@ -3,7 +3,7 @@
 
   angular
   .module('vertoDirectives')
-  .directive('showControls',
+  .directive('showControls', ['Fullscreen',
   function(Fullscreen) {
     var link = function(scope, element, attrs) {
       var i = null;
@@ -32,6 +32,6 @@
     return {
       link: link
     };
-  });
+  }]);
 
 })();
